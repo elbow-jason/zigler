@@ -46,14 +46,15 @@ defmodule Zigler.Parser.Error do
           file: path,
           line: line,
           description: IO.iodata_to_binary([msg, "\n" | rest])
-      err ->
+      {:error, parser_error, _output} ->
         raise %CompileError{
           description: """
           This zig compiler hasn't been incorporated into the parser.
+
           Please file a report at: https://github.com/ityonemo/zigler/issues
 
-            error: #{inspect(err)}
-            message: #{inspect(msg)}
+            parser_error: #{inspect(parser_error)}
+            message: #{msg}
           """
         }
     end
